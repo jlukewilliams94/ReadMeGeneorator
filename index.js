@@ -41,15 +41,22 @@ const prompts = [
     },
     {
         type: "list",
+        name: "node",
+        message: "Does this project require node.js to install?",
+        choices: ["Yes", "No"],
+        default: "Yes"
+    },
+    {
+        type: "list",
         name: "install",
         choices: ["npm", "yarn"],
-        message: "How would someone install your application?",
+        message: "If 'Yes', How would someone install your application?",
         default: "npm"
     },
     {
         type: "list",
         name: "requirements",
-        message: "Does this project require Axios and/or Inquire to run?",
+        message: "Does this project require Axios, Inquire and/or other JSON package to run?",
         choices: ["Yes","No"]
     },
     {
@@ -64,8 +71,10 @@ inquirer
     console.log(response.github)
     const deployedApp = (`https://${response.github}.github.io/${response.githubrepo}/`)
     let requirements = "";
-        if(response.requirements === "Yes") {
-            requirements = `* In your terminal please install Inquire and/or Axios using ${response.install} i ..`
+    let usage = ""
+        if(response.requirements === "Yes" && response.node === "Yes") {
+            requirements = `* In your terminal please install Inquire, Axios and/other using ${response.install} i ..`
+            usage = `* In your terminal please run node index.js to run the file`
             console.log(requirements)
         }
     axios.get(`https://api.github.com/users/${response.github}`)
@@ -88,7 +97,14 @@ inquirer
         * Usage
         * License
         * Contributing
-        * 
+        * Tests
+        * Questions
+        ## Installation
+        ${requirements}
+        ## Usage
+        ${usage}
+
+        
 
 
         
