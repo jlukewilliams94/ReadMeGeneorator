@@ -2,8 +2,7 @@ const fs = require("fs");
 const axios = require("axios");
 const inquirer = require("inquirer");
 
-inquirer
-  .prompt([
+const prompts = [
     {
         type: "input",
         name: "github",
@@ -22,7 +21,7 @@ inquirer
     {
         type: "input",
         name: "why",
-        message: "Why did you build this projcet?"
+        message: "Why did you build this project?"
     },
     {
         type: "input",
@@ -30,30 +29,70 @@ inquirer
         message: "What problems does this project overcome?"
     },
     {
+        type: "input",
+        name: "learn",
+        message: "What new skills did you learn?"
+    },
+    {
         type: "list",
-        name: "contributers",
-        message: "Did anyone else contribute to this project?",
-        choices: ["Yes", "No"]
-    }
-  ]).then((response) => {
+        name: "license",
+        message: "What licenses are you using?",
+        choices: ["MIT", "APACHE 2.0", "GPL 3.0", "BSD 3", "None"],
+    },
+    {
+        type: "list",
+        name: "install",
+        choices: ["npm", "yarn"],
+        message: "How would someone install your application?",
+        default: "npm"
+    },
+    {
+        type: "list",
+        name: "requirements",
+        message: "Does this project require Axios and/or Inquire to run?",
+        choices: ["Yes","No"]
+    },
+    {
+        type: "input", 
+        name: "contributing",
+        message: "Who else contributed on this project? [if none press enter to skip]"
+}]
+
+inquirer
+  .prompt(prompts
+).then((response) => {
     console.log(response.github)
     const deployedApp = (`https://${response.github}.github.io/${response.githubrepo}/`)
-    if (`${response.contributers}` === "Yes"){
-        inquirer.prompt ([{
-            type: "input",
-            name: "contnames",
-            message: "What is/are the other contributers Usernames?"
-        }]).then((subresp) => {
-            console.log(subresp.contnames)
-            const contributers = subresp.contnames
-        })
-    }
+    let requirements = "";
+        if(response.requirements === "Yes") {
+            requirements = `* In your terminal please install Inquire and/or Axios using ${response.install} i ..`
+            console.log(requirements)
+        }
     axios.get(`https://api.github.com/users/${response.github}`)
       .then(data => {
         const username = data.data.login
         const profilePic = data.data.avatar_url
         const email = data.data.email
         
+        let readMe = 
+        ` # ${response.title} 
+        ## Project Description
+        ### Why did I build this project?
+        * ${response.why}
+        ### What problems does this project overcome?
+        * ${response.what}
+        ### What new skills did I learn?
+        * ${response.learn}
+        ## Table of Contents
+        * Installation
+        * Usage
+        * License
+        * Contributing
+        * 
+
+
+        
+        `
     
         // Add badges
       
