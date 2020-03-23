@@ -103,16 +103,26 @@ inquirer
         ${requirements}
         ## Usage
         ${usage}
-
-        
-
-
-        
+        ## License
+        <img src="https://img.shields.io/badge/License-${response.license}-brightgreen"></img>
+        ## Contributing
+        * Project Owner
+        ${username}
+        * Project Contributers
+        ${response.contributing}
+        ## Tests
+        ## Questions
+        * What is my profile picture?
+        <img src="${profilePic}"></img>
+        * What is my email address?
+        ${email}
         `
-    
-        // Add badges
-      
-        //fs.writeFile("README.md", function(err) {
-        //})
+
+        fs.writeFile("GeneratedReadMe.md",readMe ,function(err) {
+            if (err) {
+                console.log(err);
+                throw err;
+            }
+        })
       })
   })
