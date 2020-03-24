@@ -84,44 +84,49 @@ inquirer
         const email = data.data.email
         
         let readMe = 
-        ` # ${response.title} 
-        ## Project Description
-        ### Why did I build this project?
-        * ${response.why}
-        ### What problems does this project overcome?
-        * ${response.what}
-        ### What new skills did I learn?
-        * ${response.learn}
-        ## Table of Contents
-        * Installation
-        * Usage
-        * License
-        * Contributing
-        * Tests
-        * Questions
-        ## Installation
-        ${requirements}
-        ## Usage
-        ${usage}
-        ## License
-        <img src="https://img.shields.io/badge/License-${response.license}-brightgreen"></img>
-        ## Contributing
-        * Project Owner
-        ${username}
-        * Project Contributers
-        ${response.contributing}
-        ## Tests
-        ## Questions
-        * What is my profile picture?
-        <img src="${profilePic}"></img>
-        * What is my email address?
-        ${email}
-        `
+`# ${response.title} 
+## Link to Deployed Project
+* ${deployedApp}
+## Project Description
+### Why did I build this project?
+* ${response.why}
+### What problems does this project overcome?
+* ${response.what}
+### What new skills did I learn?
+* ${response.learn}
+## Table of Contents
+* Installation
+* Usage
+* License
+* Contributing
+* Tests
+* Questions
+## Installation
+${requirements}
+## Usage
+${usage}
+## License
+![license image](https://img.shields.io/badge/License-${response.license}-brightgreen)
+## Contributing
+* Project Owner
+${username}
+* Project Contributers
+${response.contributing}
+## Tests
+## Questions
+* What is my profile picture?
+![profile image](${profilePic})
+* What is my email address?
+${email}
+`
+        console.log(readMe)
 
-        fs.writeFile("GeneratedReadMe.md",readMe ,function(err) {
+        fs.writeFile("GENREADME.md",readMe ,function(err) {
             if (err) {
                 console.log(err);
                 throw err;
+            } else {
+                console.log("Congrats you have generated your read me file")
             }
         })
       })
