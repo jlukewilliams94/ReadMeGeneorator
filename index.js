@@ -132,9 +132,9 @@ ${response.contributing}
 ## Tests
 ${test}
 ## Questions
-* What is my profile picture?
+### What is my profile picture?
 ![profile image](${profilePic})
-* What is my email address?
+### What is my email address?
 ${email}
 `
 
