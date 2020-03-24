@@ -66,7 +66,8 @@ const prompts = [
     {
         type: "input", 
         name: "contributing",
-        message: "Who else contributed on this project? [if none press enter to skip]"
+        message: "Who else contributed on this project? [if none press enter to skip]",
+        default: "None"
 }]
 
 // inquirer prompts through the above questions then stores the answer. 
