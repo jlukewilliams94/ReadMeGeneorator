@@ -1,7 +1,11 @@
+// Require fs to create new file
 const fs = require("fs");
+// Require Axios to call the API
 const axios = require("axios");
+// Require Inquirer to promt the user
 const inquirer = require("inquirer");
 
+// Stored the promted questions as a constant to make it global. 
 const prompts = [
     {
         type: "input",
@@ -65,24 +69,32 @@ const prompts = [
         message: "Who else contributed on this project? [if none press enter to skip]"
 }]
 
+// inquirer prompts through the above questions then stores the answer. 
 inquirer
   .prompt(prompts
 ).then((response) => {
-    console.log(response.github)
+    // Stored the deployed application URL
     const deployedApp = (`https://${response.github}.github.io/${response.githubrepo}/`)
+    // If the user requires Node and NPM packages then the below information will populate the Installation, Usage and Test section of the Read Me. 
     let requirements = "";
-    let usage = ""
+    let usage = "";
+    let test = "";
         if(response.requirements === "Yes" && response.node === "Yes") {
-            requirements = `* In your terminal please install Inquire, Axios and/other using ${response.install} i ..`
-            usage = `* In your terminal please run node index.js to run the file`
-            console.log(requirements)
+            requirements = `* In your terminal please install package.JSON by entering 'npm init' and completing the prompts in your terminal.`
+            usage = `Then install Inquirer, Axios and/or other using ${response.install} i [Inquirer, Axios, etc]`
+            test = `* In your terminal please run node index.js to run the file`
         }
+    // Axios cal to retrieve GitHub information
     axios.get(`https://api.github.com/users/${response.github}`)
       .then(data => {
+        // Github Username
         const username = data.data.login
+        // Github ProfilePic URL
         const profilePic = data.data.avatar_url
+        //Github Email Address
         const email = data.data.email
         
+        // Dynamically build the read me section by section by inputing data as needed. 
         let readMe = 
 `# ${response.title} 
 ## Link to Deployed Project
@@ -113,14 +125,15 @@ ${username}
 * Project Contributers
 ${response.contributing}
 ## Tests
+${test}
 ## Questions
 * What is my profile picture?
 ![profile image](${profilePic})
 * What is my email address?
 ${email}
 `
-        console.log(readMe)
 
+        // Function to create new file (GENREADME.md), with store readMe infomation written to file. If there is an error an error will be thrown to user. 
         fs.writeFile("GENREADME.md",readMe ,function(err) {
             if (err) {
                 console.log(err);
