@@ -82,7 +82,7 @@ inquirer
     let test = "";
         if(response.requirements === "Yes" && response.node === "Yes") {
             requirements = `* In your terminal please install package.JSON by entering 'npm init' and completing the prompts in your terminal.`
-            usage = `Then install Inquirer, Axios and/or other using ${response.install} i [Inquirer, Axios, etc]`
+            usage = `* Then install Inquirer, Axios and/or other using ${response.install} i [Inquirer, Axios, etc]`
             test = `* In your terminal please run node index.js to run the file`
         }
     // Axios cal to retrieve GitHub information
